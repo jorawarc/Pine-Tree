@@ -60,4 +60,4 @@ class Warzone:
         print(groups.head(5))
 
         if output_data:
-            return groups
+            return player_team, groups
