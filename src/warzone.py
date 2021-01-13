@@ -19,7 +19,7 @@ class Warzone:
     async def _initialize_client(self):
         self.client = await callofduty.Login(self.email, self.password)
 
-    async def _fetch_lobby(self, username):
+    async def _fetch_lobby(self, username: str) -> pd.DataFrame:
         if not self.client:
             await self._initialize_client()
 
@@ -43,7 +43,7 @@ class Warzone:
         df = pd.DataFrame(player_stats).sort_values('kdRatio', ascending=False).reset_index()
         return df
 
-    async def post_game_stats(self, username, output_data=False):
+    async def post_game_stats(self, username: str, output_data=False):
         name = username.split('#')[0].lower().capitalize()
         df = await self._fetch_lobby(username)
         player = df[df['player'] == name]

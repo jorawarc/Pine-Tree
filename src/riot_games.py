@@ -1,6 +1,5 @@
 
 import os
-import requests
 import riotwatcher
 from dotenv import load_dotenv
 
@@ -19,7 +18,7 @@ class DataDragon:
         self.manifest = self.lol.data_dragon.champions(version=self.version, full=False)['data']
         self.champions = [v['name'] for _, v in self.manifest.items()]
 
-    def get_champion_cool_down(self, champion: str):
+    def get_champion_cool_down(self, champion: str) -> dict:
         query = f'champion/{champion}.json'
         response = requests.get(self.url.format(version=self.version, language=self.language, query=query)).json()['data']
         spells = zip(['q', 'w', 'e', 'r'], response[champion]['spells'])
