@@ -1,5 +1,6 @@
 
 import os
+import requests
 import riotwatcher
 from dotenv import load_dotenv
 
