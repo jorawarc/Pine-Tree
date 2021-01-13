@@ -19,7 +19,7 @@ class Warzone:
     async def _initialize_client(self):
         self.client = await callofduty.Login(self.email, self.password)
 
-    async def _fetch_lobby(self, username: str) -> pd.DataFrame:
+    async def _fetch_lobby(self, username: str) -> tuple:
         if not self.client:
             await self._initialize_client()
 
@@ -41,11 +41,11 @@ class Warzone:
                       'player': i['player']['username']}
             player_stats.append(player)
         df = pd.DataFrame(player_stats).sort_values('kdRatio', ascending=False).reset_index()
-        return df
+        return start_time, df
 
     async def post_game_stats(self, username: str, output_data=False):
         name = username.split('#')[0].lower().capitalize()
-        df = await self._fetch_lobby(username)
+        start_time, df = await self._fetch_lobby(username)
         player = df[df['player'] == name]
         player_team = df[df['team'] == player['team'].iloc[0]]
         print(player_team)
@@ -60,4 +60,4 @@ class Warzone:
         print(groups.head(5))
 
         if output_data:
-            return player_team, groups
+            return start_time, player_team, groups

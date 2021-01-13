@@ -48,8 +48,13 @@ async def wz(ctx, *args):
 
 
 async def post(username: str) -> str:
-    player, group = await WZ.post_game_stats(username, output_data=True)
-    output = f"```\n{player.to_string()} \n {group.head(5).to_string()}\n```"
+    start_time, player, group = await WZ.post_game_stats(username, output_data=True)
+    output = f"```\n" \
+             f"Game start time {start_time}\n" \
+             f"{player[['kdRatio', 'kills', 'deaths', 'damageDone', 'player']].to_string()}\n\n" \
+             f"{group[group['team'] == player['team'].iloc[0]].to_string()}\n\n" \
+             f"{group.head(5).to_string()}\n" \
+             f"```"
     return output
 
 
