@@ -40,7 +40,7 @@ class Warzone:
                       'team': i['player']['team'],
                       'player': i['player']['username']}
             player_stats.append(player)
-        df = pd.DataFrame(player_stats).sort_values('kdRatio', ascending=False).reset_index()
+        df = pd.DataFrame(player_stats).sort_values('damageDone', ascending=False).reset_index()
         return start_time, df
 
     async def post_game_stats(self, username: str, output_data=False):
