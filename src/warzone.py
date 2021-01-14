@@ -53,7 +53,7 @@ class Warzone:
         groups = df[['team', 'kdRatio', 'kills', 'deaths', 'damageDone']]\
             .groupby('team')\
             .mean()\
-            .sort_values(by='kdRatio', ascending=False)\
+            .sort_values(by='damageDone', ascending=False)\
             .reset_index()
 
         print(groups[groups['team'] == player['team'].iloc[0]])
